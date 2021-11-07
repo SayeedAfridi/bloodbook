@@ -7,11 +7,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import RNBootSplash from 'react-native-bootsplash'
 
 const AppProvider: React.FC = () => {
-  React.useEffect(() => {
-    RNBootSplash.hide({ fade: true })
-  }, [])
   return (
-    <RootNavigation>
+    <RootNavigation onReady={() => RNBootSplash.hide({ fade: true })}>
       <ThemeProvider theme={theme}>
         <SafeAreaProvider>
           <App />

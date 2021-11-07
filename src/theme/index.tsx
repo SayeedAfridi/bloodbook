@@ -32,7 +32,7 @@ const theme = createTheme({
     lightGrey: palette.lightGrey,
     darkGrey: palette.darkGrey,
     danger: palette.red,
-    background: palette.lightbackground,
+    background: palette.white,
     transparent: 'transparent',
     orange: palette.orange,
     schoolBusYellow: palette.schoolBusYellow,
