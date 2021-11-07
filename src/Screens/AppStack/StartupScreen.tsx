@@ -1,18 +1,30 @@
-import Container from '@src/components/Container'
+import { Spacer } from '@src/components'
 import { Box, Text } from '@src/theme'
+import LottieView from 'lottie-react-native'
 import React from 'react'
 
 export interface StartupScreenProps {}
 
+const AnimationSize = 200
+
 const StartupScreen: React.FC<StartupScreenProps> = ({}) => {
   return (
-    <Container>
-      <Box flex={1} justifyContent='center' alignItems='center'>
-        <Text variant='title'>
-          This is a startup screen. Create screen and explore.
-        </Text>
-      </Box>
-    </Container>
+    <Box
+      backgroundColor='background'
+      flex={1}
+      justifyContent='center'
+      alignItems='center'>
+      <LottieView
+        style={{ height: AnimationSize }}
+        source={require('@src/assets/animations/blood-donate.json')}
+        loop={true}
+        autoPlay={true}
+      />
+      <Spacer space='large' />
+      <Text color='grey' variant='logo'>
+        Donate Blood , Save Life ❤️
+      </Text>
+    </Box>
   )
 }
 
