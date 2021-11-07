@@ -1,4 +1,4 @@
-package com.bloodbook;
+package io.sayeed.bloodbook;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
