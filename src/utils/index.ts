@@ -6,3 +6,4 @@ export {
   screenWidth,
   listenOrientationChange,
 } from './layout.utils'
+export { delay } from './fakeApi.utils'

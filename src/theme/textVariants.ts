@@ -37,8 +37,13 @@ const textVariants = {
     fontSize: fp(2.3),
   },
   inputlabel: {
-    fontSize: fp(1.8),
+    fontSize: fp(2),
     fontFamily: 'Poppins-Bold',
+  },
+  error: {
+    fontFamily: 'Poppins-Thin',
+    color: 'danger',
+    fontSize: fp(1.8),
   },
 }
 

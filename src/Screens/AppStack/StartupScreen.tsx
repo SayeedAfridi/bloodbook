@@ -1,13 +1,25 @@
 import { Spacer } from '@src/components'
+import { useMount } from '@src/hooks'
+import { AppNavigationProps } from '@src/navigtation/types'
 import { Box, Text } from '@src/theme'
+import { delay } from '@src/utils'
 import LottieView from 'lottie-react-native'
 import React from 'react'
 
-export interface StartupScreenProps {}
-
 const AnimationSize = 200
 
-const StartupScreen: React.FC<StartupScreenProps> = ({}) => {
+const StartupScreen: React.FC<AppNavigationProps<'Startup'>> = ({
+  navigation,
+}) => {
+  const init = async () => {
+    try {
+      await delay(2500)
+      navigation.replace('Authentication')
+    } catch (error) {}
+  }
+  useMount(async () => {
+    await init()
+  })
   return (
     <Box
       backgroundColor='background'

@@ -2,6 +2,8 @@ const palette = {
   purple: '#9C28B1',
   lightPurple: '#673BB7',
 
+  hanBlue: '#2196f3',
+
   yankeeBlue: '#172137',
 
   amber: '#FF9700',
