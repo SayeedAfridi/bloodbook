@@ -11,6 +11,7 @@ export type AppStackRoutes = {
   Startup: undefined
   Authentication: undefined
   AppHome: undefined
+  CreateRequest: undefined
 }
 
 export type AppRoutes = AppStackRoutes & AuthRoutes & HomeRoutes

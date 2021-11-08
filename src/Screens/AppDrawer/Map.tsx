@@ -40,7 +40,7 @@ const Map: React.FC<HomeNavigationProps<'Map'>> = ({ navigation }) => {
           color='background'
           backgroundColor='primary'
           name='plus'
-          onPress={() => navigation.openDrawer()}
+          onPress={() => navigation.navigate('CreateRequest')}
         />
       </Box>
       <Box style={StyleSheet.absoluteFill}>
