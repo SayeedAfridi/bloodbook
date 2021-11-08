@@ -6,7 +6,7 @@ import { authReducer } from './auth/auth.slice'
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  // whitelist: ['auth'],
+  whitelist: ['auth'],
 }
 
 const rootReducer = combineReducers({

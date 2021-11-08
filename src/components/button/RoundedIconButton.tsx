@@ -1,4 +1,4 @@
-import { Box, TouchBox } from '@src/theme'
+import { Box, TouchBox, Text } from '@src/theme'
 import React from 'react'
 import { RoundedIconProps } from '../RoundedIcon'
 import Icon from 'react-native-vector-icons/Feather'
@@ -29,7 +29,9 @@ const RoundedIconButton: React.FC<RoundedIcnBtnProps> = ({
         alignItems='center'
         borderRadius='round'
         onPress={onPress}>
-        <Icon name={props.name} size={iconSize} />
+        <Text color={props.color} style={{ height: iconSize, width: iconSize }}>
+          <Icon name={props.name} size={iconSize} />
+        </Text>
       </TouchBox>
     </Box>
   )

@@ -4,6 +4,7 @@ import { AppStackRoutes } from '../types'
 import StartupScreen from '@src/Screens/AppStack/StartupScreen'
 import { stackScreenOptions } from '../options'
 import AuthNavigator from './AuthNavigator'
+import HomeNavigator from './HomeNavigator'
 
 const { Navigator, Screen } = createNativeStackNavigator<AppStackRoutes>()
 
@@ -12,6 +13,7 @@ const AppNavigator: React.FC = () => {
     <Navigator screenOptions={stackScreenOptions}>
       <Screen name='Startup' component={StartupScreen} />
       <Screen name='Authentication' component={AuthNavigator} />
+      <Screen name='AppHome' component={HomeNavigator} />
     </Navigator>
   )
 }

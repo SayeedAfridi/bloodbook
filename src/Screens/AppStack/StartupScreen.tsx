@@ -1,19 +1,25 @@
 import { Spacer } from '@src/components'
 import { useMount } from '@src/hooks'
 import { AppNavigationProps } from '@src/navigtation/types'
+import { selectUser } from '@src/redux/auth/auth.selectors'
 import { geoService } from '@src/services'
 import { Box, Text } from '@src/theme'
 import { delay } from '@src/utils'
 import LottieView from 'lottie-react-native'
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const AnimationSize = 200
 
 const StartupScreen: React.FC<AppNavigationProps<'Startup'>> = ({
   navigation,
 }) => {
+  const user = useSelector(selectUser)
   const navigate = () => {
-    navigation.replace('Authentication')
+    if (!user) {
+      navigation.replace('Authentication')
+    }
+    navigation.replace('AppHome')
   }
 
   const init = async () => {
