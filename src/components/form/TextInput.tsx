@@ -48,7 +48,7 @@ const TextInput = React.forwardRef<TextInputRef, TextInputProps>(
     const reColor: keyof typeof theme.colors = !touched
       ? 'grey'
       : !error
-      ? 'primary'
+      ? 'secondary'
       : 'danger'
     const color = theme.colors[reColor]
     const [view, setView] = React.useState<boolean>(false)

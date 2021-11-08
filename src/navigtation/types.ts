@@ -11,7 +11,7 @@ export type AppStackRoutes = {
   Authentication: undefined
 }
 
-export type AppRoutes = AppStackRoutes
+export type AppRoutes = AppStackRoutes & AuthRoutes
 
 export interface AuthNavigationProps<RouteName extends keyof AuthRoutes> {
   navigation: CompositeNavigationProp<

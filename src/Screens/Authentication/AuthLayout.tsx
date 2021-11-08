@@ -34,9 +34,7 @@ const AuthLayout = ({
 }: AuthLayoutProps) => {
   const theme = useTheme()
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: theme.colors.danger }}
-      behavior='padding'>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding'>
       <ScrollView
         contentContainerStyle={{ backgroundColor: theme.colors.white }}
         showsVerticalScrollIndicator={false}
@@ -44,9 +42,7 @@ const AuthLayout = ({
         <Box
           minHeight={Dimensions.get('screen').height}
           flex={1}
-          justifyContent='center'
-          backgroundColor='white'
-          alignItems='center'>
+          backgroundColor='white'>
           {onBackButtonPressed ? (
             <Box position='absolute' top={50} left={15}>
               <RoundedIconButton
@@ -75,15 +71,14 @@ const AuthLayout = ({
               loop={true}
             />
           </Box>
+          <Box height={hp(38)} zIndex={-1} />
           <Box
-            margin='m'
-            justifyContent='center'
             backgroundColor='white'
             borderTopRightRadius='xl'
             borderTopLeftRadius='xl'
-            width='100%'
-            alignItems='center'>
-            <Spacer space='medium' />
+            marginBottom='l'
+            width='100%'>
+            <Spacer space='large' />
             <Text variant='logo' fontWeight='700' marginVertical='m'>
               {title}
             </Text>
@@ -115,7 +110,13 @@ const AuthLayout = ({
               ) : null}
             </Box>
             {onSignupPressed ? (
-              <LinkButton title={signUpTitle} onPress={onSignupPressed} />
+              <Box justifyContent='center' alignItems='center'>
+                <LinkButton
+                  title={signUpTitle}
+                  textAlign='right'
+                  onPress={onSignupPressed}
+                />
+              </Box>
             ) : null}
             {onSkipPress ? (
               <Box marginTop='l'>
