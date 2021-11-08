@@ -1,8 +1,6 @@
-import { StackActions } from '@react-navigation/routers'
 import { createSlice } from '@reduxjs/toolkit'
-import { rootNavRef } from '@src/navigtation/RootNavigation'
 import { showSuccessSnackbar } from '@src/utils'
-import { loginAsync, signupAsync } from './auth.async'
+import { loginAsync, logoutAsync, signupAsync } from './auth.async'
 import { AuthState } from './auth.types'
 
 const initialState: AuthState = {
@@ -14,11 +12,7 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    logout: (state) => {
-      state.user = undefined
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(loginAsync.pending, (state) => {
       state.loggingIn = true
@@ -29,7 +23,6 @@ const authSlice = createSlice({
     builder.addCase(loginAsync.fulfilled, (state, action) => {
       state.loggingIn = false
       state.user = action.payload
-      rootNavRef.current?.dispatch(StackActions.replace('AppHome'))
     })
     builder.addCase(signupAsync.pending, (state) => {
       state.signupIn = true
@@ -41,7 +34,16 @@ const authSlice = createSlice({
       state.signupIn = false
       state.user = action.payload
       showSuccessSnackbar('Signup successfull')
-      rootNavRef.current?.dispatch(StackActions.replace('AppHome'))
+    })
+
+    builder.addCase(logoutAsync.fulfilled, (state) => {
+      state.user = undefined
+    })
+    builder.addCase(logoutAsync.pending, (state) => {
+      state.loggingIn = false
+    })
+    builder.addCase(logoutAsync.rejected, (state) => {
+      state.loggingIn = false
     })
   },
 })

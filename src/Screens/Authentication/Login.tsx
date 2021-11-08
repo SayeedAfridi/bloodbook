@@ -5,7 +5,7 @@ import AuthLayout from './AuthLayout'
 import { useFormik } from 'formik'
 import { loginSchema } from '@src/validations/user.validations'
 import { useSelector } from 'react-redux'
-import { selectIsLoggingIn } from '@src/redux/auth/auth.selectors'
+import { selectIsLoggingIn, selectUser } from '@src/redux/auth/auth.selectors'
 import { loginAsync } from '@src/redux/auth/auth.async'
 import { useAppDispatch } from '@src/hooks'
 
@@ -18,10 +18,13 @@ const initialValues = {
 
 const Login: React.FC<AuthNavigationProps<'Login'>> = ({ navigation }) => {
   const loading = useSelector(selectIsLoggingIn)
+  const user = useSelector(selectUser)
   const dispatch = useAppDispatch()
 
-  const onSubmit = (v: typeof initialValues) => {
-    dispatch(loginAsync(v))
+  const onSubmit = async (v: typeof initialValues) => {
+    try {
+      await dispatch(loginAsync(v))
+    } catch (error) {}
   }
   const { handleSubmit, handleBlur, handleChange, values, errors, touched } =
     useFormik({
@@ -29,6 +32,13 @@ const Login: React.FC<AuthNavigationProps<'Login'>> = ({ navigation }) => {
       onSubmit,
       validationSchema: loginSchema,
     })
+
+  React.useEffect(() => {
+    if (user && !loading) {
+      navigation.replace('AppHome')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, loading])
   return (
     <AuthLayout
       mainButtonTitle='Login'

@@ -18,6 +18,7 @@ const StartupScreen: React.FC<AppNavigationProps<'Startup'>> = ({
   const navigate = () => {
     if (!user) {
       navigation.replace('Authentication')
+      return
     }
     navigation.replace('AppHome')
   }

@@ -17,6 +17,20 @@ export const loginAsync = createAsyncThunk<
   }
 })
 
+export const logoutAsync = createAsyncThunk<string, void>(
+  'auth/logout',
+  async () => {
+    try {
+      await authService.logout()
+      return 'done'
+    } catch (error) {
+      const message = getErrorMessage(error)
+      showErrorSnackbar(message)
+      return Promise.reject(error)
+    }
+  },
+)
+
 export const signupAsync = createAsyncThunk<User, any>(
   'auth/signup',
   async (data) => {

@@ -84,6 +84,10 @@ class _AuthService {
       throw error
     }
   }
+
+  async logout() {
+    await this.auth.signOut()
+  }
 }
 
 const authService = new _AuthService()

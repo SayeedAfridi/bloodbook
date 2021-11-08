@@ -5,7 +5,7 @@ import AuthLayout from './AuthLayout'
 import { useFormik } from 'formik'
 import { signupSchema } from '@src/validations/user.validations'
 import { useSelector } from 'react-redux'
-import { selectIsSignupIn } from '@src/redux/auth/auth.selectors'
+import { selectIsSignupIn, selectUser } from '@src/redux/auth/auth.selectors'
 import { signupAsync } from '@src/redux/auth/auth.async'
 import { useAppDispatch } from '@src/hooks'
 import { BloodGroup } from '@src/types/auth.types'
@@ -23,6 +23,7 @@ const initialValues = {
 
 const Signup: React.FC<AuthNavigationProps<'Login'>> = ({ navigation }) => {
   const loading = useSelector(selectIsSignupIn)
+  const user = useSelector(selectUser)
   const dispatch = useAppDispatch()
   const [bloodGroup, setBloodGroup] = React.useState<BloodGroup | ''>('')
 
@@ -43,6 +44,13 @@ const Signup: React.FC<AuthNavigationProps<'Login'>> = ({ navigation }) => {
       onSubmit,
       validationSchema: signupSchema,
     })
+
+  React.useEffect(() => {
+    if (user && !loading) {
+      navigation.replace('AppHome')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, loading])
   return (
     <AuthLayout
       mainButtonTitle='Signup'
