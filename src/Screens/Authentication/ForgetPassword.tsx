@@ -50,7 +50,7 @@ const ForgetPassword: React.FC<AuthNavigationProps<'ForgetPassword'>> = ({
     })
   return (
     <AuthLayout
-      mainButtonTitle='Send Code'
+      mainButtonTitle='Send Link'
       onBackButtonPressed={() => navigation.goBack()}
       mainButtonPressed={handleSubmit}
       onSignupPressed={() => navigation.navigate('Login')}
