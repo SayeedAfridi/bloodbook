@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { showSuccessSnackbar } from '@src/utils'
-import { loginAsync, logoutAsync, signupAsync } from './auth.async'
+import {
+  loginAsync,
+  logoutAsync,
+  signupAsync,
+  updateLocation,
+} from './auth.async'
 import { AuthState } from './auth.types'
 
 const initialState: AuthState = {
@@ -45,6 +50,13 @@ const authSlice = createSlice({
     builder.addCase(logoutAsync.rejected, (state) => {
       state.loggingIn = false
     })
+    builder.addCase(updateLocation.fulfilled, (state, action) => {
+      if (state.user) {
+        state.user.location = action.payload
+      }
+    })
+    builder.addCase(updateLocation.pending, () => {})
+    builder.addCase(updateLocation.rejected, () => {})
   },
 })
 

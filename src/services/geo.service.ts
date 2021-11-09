@@ -4,8 +4,7 @@ import Geo from 'react-native-geolocation-service'
 class _GeoService {
   async requestPermission() {
     if (Platform.OS === 'ios') {
-      const status = await Geo.requestAuthorization('whenInUse')
-      console.log(status)
+      await Geo.requestAuthorization('whenInUse')
     } else if (Platform.OS === 'android') {
       await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,

@@ -10,9 +10,11 @@ export type User = {
   bloodGroup: BloodGroup
   lastDonated?: string
   phone: string
-  location?: {
-    lat: number
-    long: number
-  }
+  location: Location
   address?: string
+}
+
+export type Location = {
+  lat: number
+  long: number
 }

@@ -1,6 +1,6 @@
 import { firebase } from '@react-native-firebase/auth'
 import { userCollection } from '@src/constants/collections'
-import { BloodGroup, User } from '@src/types/auth.types'
+import { BloodGroup, Location, User } from '@src/types/auth.types'
 import firestoreService from './firestore.service'
 
 class _AuthService {
@@ -26,6 +26,7 @@ class _AuthService {
     name: string,
     bloodGroup: BloodGroup,
     phone: string,
+    location: Location,
   ) {
     try {
       const userCred = await this.auth.createUserWithEmailAndPassword(
@@ -42,6 +43,7 @@ class _AuthService {
         createdAt: currentDate,
         updatedAt: currentDate,
         phone,
+        location,
       }
       await this.createUserProfile(data)
       return data
@@ -87,6 +89,18 @@ class _AuthService {
 
   async logout() {
     await this.auth.signOut()
+  }
+
+  getCurrentUser() {
+    return this.auth.currentUser
+  }
+
+  getUserDocRef() {
+    if (this.auth.currentUser) {
+      return firestoreService
+        .getCollectionRef(userCollection)
+        .doc(this.getCurrentUser()?.uid)
+    }
   }
 }
 

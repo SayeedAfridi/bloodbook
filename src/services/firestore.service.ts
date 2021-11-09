@@ -19,6 +19,18 @@ class _FirestoreService {
     }
     return collection.doc(doc)
   }
+  convertCollectionsSnapshotToMap = (collections: any) => {
+    const transformedCollection = collections.docs.map((doc: any) => {
+      const data = doc.data()
+
+      return {
+        id: doc.id,
+        ...data,
+      }
+    })
+
+    return transformedCollection
+  }
 }
 
 const firestoreService = new _FirestoreService()
