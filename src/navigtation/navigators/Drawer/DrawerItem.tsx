@@ -37,7 +37,7 @@ const DrawerItem = ({
       <Box flex={1}>
         <Text
           variant='title'
-          fontFamily={right ? 'Cabin-Bold' : 'Cabin-Medium'}>
+          fontFamily={right ? 'Poppins-Bold' : 'Poppins-Medium'}>
           {title}
         </Text>
       </Box>

@@ -97,7 +97,9 @@ const Button: React.FC<ButtonProps> = ({
             lineHeight={22}
             variant='button'
             textTransform='uppercase'
-            fontFamily={!boldText || disabled ? 'Exo2-Regular' : 'Exo2-Bold'}
+            fontFamily={
+              !boldText || disabled ? 'Poppins-Regular' : 'Poppins-Bold'
+            }
             color={color}>
             {title}
           </Text>
