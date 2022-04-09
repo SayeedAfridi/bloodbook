@@ -25,7 +25,7 @@ const DrawerHeader: React.FC<DrawerHeaderProps> = ({ user, onPress }) => {
       <Box
         height={hp(20) + insets.top}
         marginBottom='s'
-        paddingHorizontal='m'
+        paddingHorizontal='s'
         style={{ paddingTop: insets.top + 20 }}>
         <Box flexDirection='row'>
           <RoundedIcon
