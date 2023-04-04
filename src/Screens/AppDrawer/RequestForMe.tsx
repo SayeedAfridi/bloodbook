@@ -3,7 +3,6 @@ import { HomeNavigationProps } from '@src/navigtation/types'
 import { Container, Header, RoundedIconButton } from '@src/components'
 import { Box } from '@src/theme'
 import { BloodRequest } from '@src/types/request.types'
-import { useMount } from '@src/hooks'
 import { getErrorMessage, showErrorSnackbar } from '@src/utils'
 import { firestoreService } from '@src/services'
 import { requestCollection } from '@src/constants/collections'
@@ -12,6 +11,7 @@ import RequestItem from './RequestItem'
 import OverLayLoader from '@src/components/OverLayLoader'
 import { useSelector } from 'react-redux'
 import { selectUser } from '@src/redux/auth/auth.selectors'
+import { useFocusEffect } from '@react-navigation/native'
 
 const RequestsForMe: React.FC<HomeNavigationProps<'RequestsForMe'>> = ({
   navigation,
@@ -20,7 +20,7 @@ const RequestsForMe: React.FC<HomeNavigationProps<'RequestsForMe'>> = ({
   const [reqs, setReqs] = React.useState<BloodRequest[]>([])
   const user = useSelector(selectUser)
 
-  const loadReqs = async () => {
+  const loadReqs = React.useCallback(async () => {
     try {
       setLoading(true)
       const reqsCollectionRef =
@@ -36,11 +36,13 @@ const RequestsForMe: React.FC<HomeNavigationProps<'RequestsForMe'>> = ({
       const message = getErrorMessage(error)
       showErrorSnackbar(message)
     }
-  }
+  }, [user?.uid])
 
-  useMount(() => {
-    loadReqs()
-  })
+  useFocusEffect(
+    React.useCallback(() => {
+      loadReqs()
+    }, [loadReqs]),
+  )
   if (loading) {
     return (
       <Container>

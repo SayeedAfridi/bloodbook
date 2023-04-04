@@ -3,13 +3,13 @@ import { HomeNavigationProps } from '@src/navigtation/types'
 import { Container, Header, RoundedIconButton } from '@src/components'
 import { Box } from '@src/theme'
 import { BloodRequest } from '@src/types/request.types'
-import { useMount } from '@src/hooks'
 import { getErrorMessage, showErrorSnackbar } from '@src/utils'
 import { firestoreService } from '@src/services'
 import { requestCollection } from '@src/constants/collections'
 import { FlatList, RefreshControl } from 'react-native'
 import RequestItem from './RequestItem'
 import OverLayLoader from '@src/components/OverLayLoader'
+import { useFocusEffect } from '@react-navigation/native'
 
 const Requests: React.FC<HomeNavigationProps<'Requests'>> = ({
   navigation,
@@ -17,7 +17,7 @@ const Requests: React.FC<HomeNavigationProps<'Requests'>> = ({
   const [loading, setLoading] = React.useState<boolean>(false)
   const [reqs, setReqs] = React.useState<BloodRequest[]>([])
 
-  const loadReqs = async () => {
+  const loadReqs = React.useCallback(async () => {
     try {
       setLoading(true)
       const reqsCollectionRef =
@@ -31,11 +31,13 @@ const Requests: React.FC<HomeNavigationProps<'Requests'>> = ({
       const message = getErrorMessage(error)
       showErrorSnackbar(message)
     }
-  }
+  }, [])
 
-  useMount(() => {
-    loadReqs()
-  })
+  useFocusEffect(
+    React.useCallback(() => {
+      loadReqs()
+    }, [loadReqs]),
+  )
   if (loading) {
     return (
       <Container>

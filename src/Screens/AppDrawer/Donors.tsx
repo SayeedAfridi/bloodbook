@@ -2,7 +2,6 @@ import React from 'react'
 import { HomeNavigationProps } from '@src/navigtation/types'
 import { Container, Header } from '@src/components'
 import { Box } from '@src/theme'
-import { useMount } from '@src/hooks'
 import { getErrorMessage, showErrorSnackbar } from '@src/utils'
 import { firestoreService } from '@src/services'
 import { userCollection } from '@src/constants/collections'
@@ -12,13 +11,14 @@ import DonorItem from './DonorItem'
 import { User } from '@src/types/auth.types'
 import { useSelector } from 'react-redux'
 import { selectUser } from '@src/redux/auth/auth.selectors'
+import { useFocusEffect } from '@react-navigation/native'
 
 const Donors: React.FC<HomeNavigationProps<'Donors'>> = ({ navigation }) => {
   const [loading, setLoading] = React.useState<boolean>(false)
   const [reqs, setReqs] = React.useState<User[]>([])
   const user = useSelector(selectUser)
 
-  const loadReqs = async () => {
+  const loadReqs = React.useCallback(async () => {
     try {
       setLoading(true)
       const userCollectionRef =
@@ -34,11 +34,13 @@ const Donors: React.FC<HomeNavigationProps<'Donors'>> = ({ navigation }) => {
       const message = getErrorMessage(error)
       showErrorSnackbar(message)
     }
-  }
+  }, [user?.uid])
 
-  useMount(() => {
-    loadReqs()
-  })
+  useFocusEffect(
+    React.useCallback(() => {
+      loadReqs()
+    }, [loadReqs]),
+  )
   if (loading) {
     return (
       <Container>
