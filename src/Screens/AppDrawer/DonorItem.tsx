@@ -9,9 +9,10 @@ import { Linking } from 'react-native'
 
 export interface DonorItemProps {
   donor: User
+  showButtons?: boolean
 }
 
-const DonorItem: React.FC<DonorItemProps> = ({ donor }) => {
+const DonorItem: React.FC<DonorItemProps> = ({ donor, showButtons = true }) => {
   const nav = useNavigation<any>()
   const isNotElligible =
     donor.lastDonated && dayjs().isBefore(dayjs(donor.lastDonated).add(4, 'M'))
@@ -29,7 +30,7 @@ const DonorItem: React.FC<DonorItemProps> = ({ donor }) => {
           ligible for donation
         </Text>
       </Box>
-      {!isNotElligible ? (
+      {showButtons && !isNotElligible ? (
         <>
           <Spacer space='medium' />
           <Box flexDirection='row'>

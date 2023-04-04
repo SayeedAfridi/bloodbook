@@ -3,7 +3,7 @@ import { HomeNavigationProps } from '@src/navigtation/types'
 import { Box } from '@src/theme'
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { RoundedIconButton } from '@src/components'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useSelector } from 'react-redux'
@@ -11,6 +11,8 @@ import { selectUser } from '@src/redux/auth/auth.selectors'
 import { firestoreService } from '@src/services'
 import { userCollection } from '@src/constants/collections'
 import { User } from '@src/types/auth.types'
+import DonorItem from './DonorItem'
+import dayjs from 'dayjs'
 
 const Map: React.FC<HomeNavigationProps<'Map'>> = ({ navigation }) => {
   const user = useSelector(selectUser)
@@ -111,16 +113,19 @@ const Map: React.FC<HomeNavigationProps<'Map'>> = ({ navigation }) => {
                 coordinate={{
                   latitude: u.location.lat,
                   longitude: u.location.long,
-                }}
-                flat={true}
-                title={u.name}
-                description={`group: ${u.bloodGroup} ve`}
-                onCalloutPress={() =>
-                  navigation.navigate('CreateRequest', {
-                    toUser: u,
-                  })
-                }
-              />
+                }}>
+                <Callout
+                  onPress={() => {
+                    const isNotElligible =
+                      u.lastDonated &&
+                      dayjs().isBefore(dayjs(u.lastDonated).add(4, 'M'))
+                    if (!isNotElligible) {
+                      navigation.navigate('CreateRequest', { toUser: u })
+                    }
+                  }}>
+                  <DonorItem donor={u} showButtons={false} />
+                </Callout>
+              </Marker>
             )
           })}
         </MapView>
