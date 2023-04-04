@@ -63,6 +63,13 @@ const MyDrawer = ({ state, navigation }: DrawerContentComponentProps) => {
           onPress={() => navigation.navigate('Donors')}
           left='users'
         />
+        <DrawerItem
+          focused={state.index === 4}
+          title='Campaigns'
+          right
+          onPress={() => navigation.navigate('Campaigns')}
+          left='map'
+        />
         <Spacer space='medium' />
         <DrawerItem left='log-out' title='Logout' right onPress={logout} />
       </Box>

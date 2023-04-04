@@ -13,6 +13,7 @@ export type AppStackRoutes = {
   Authentication: undefined
   AppHome: undefined
   CreateRequest?: { toUser: User }
+  CreateCampaign: undefined
 }
 
 export type AppRoutes = AppStackRoutes & AuthRoutes & HomeRoutes
@@ -45,4 +46,5 @@ export type HomeRoutes = {
   Requests: undefined
   RequestsForMe: undefined
   Donors: undefined
+  Campaigns: undefined
 }

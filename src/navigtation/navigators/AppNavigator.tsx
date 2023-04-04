@@ -4,7 +4,11 @@ import { AppStackRoutes } from '../types'
 import { stackScreenOptions } from '../options'
 import AuthNavigator from './AuthNavigator'
 import HomeNavigator from './HomeNavigator'
-import { CreateRequest, StartupScreen } from '@src/Screens/AppStack'
+import {
+  CreateCampaign,
+  CreateRequest,
+  StartupScreen,
+} from '@src/Screens/AppStack'
 
 const { Navigator, Screen } = createNativeStackNavigator<AppStackRoutes>()
 
@@ -15,6 +19,7 @@ const AppNavigator: React.FC = () => {
       <Screen name='Authentication' component={AuthNavigator} />
       <Screen name='AppHome' component={HomeNavigator} />
       <Screen name='CreateRequest' component={CreateRequest} />
+      <Screen name='CreateCampaign' component={CreateCampaign} />
     </Navigator>
   )
 }
