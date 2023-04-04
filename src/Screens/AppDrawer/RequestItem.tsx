@@ -13,12 +13,11 @@ export interface RequestItemProps {
 
 const RequestItem: React.FC<RequestItemProps> = ({ req }) => {
   const shareOnFB = React.useCallback(() => {
-    Share.shareSingle({
+    Share.open({
       title: 'Urgent blood needed',
       message: `${req.bloodGroup} blood needed at ${req.address}. For more information call ${req.phone}`,
-      social: Share.Social.FACEBOOK,
     }).catch(() => {
-      showErrorSnackbar('Facebook is not installed')
+      showErrorSnackbar('Something went wrong!')
     })
   }, [req.address, req.bloodGroup, req.phone])
 
@@ -40,12 +39,7 @@ const RequestItem: React.FC<RequestItemProps> = ({ req }) => {
         </Text>
       </TouchBox>
       <Box marginTop='s'>
-        <Button
-          onPress={shareOnFB}
-          variant='secondary'
-          title='Share on Facebook'
-          icon='facebook'
-        />
+        <Button onPress={shareOnFB} variant='secondary' title='Share Request' />
       </Box>
     </Card>
   )
