@@ -8,6 +8,7 @@ import { useAppDispatch, useMount } from '@src/hooks'
 import Geo from 'react-native-geolocation-service'
 import { updateLocation } from '@src/redux/auth/auth.async'
 import RequestsForMe from '@src/Screens/AppDrawer/RequestForMe'
+import Donors from '@src/Screens/AppDrawer/Donors'
 
 const { Navigator, Screen } = createDrawerNavigator<HomeRoutes>()
 
@@ -32,6 +33,7 @@ const HomeNavigator: React.FC = () => {
       <Screen name='Map' component={Map} />
       <Screen name='Requests' component={Requests} />
       <Screen name='RequestsForMe' component={RequestsForMe} />
+      <Screen name='Donors' component={Donors} />
     </Navigator>
   )
 }

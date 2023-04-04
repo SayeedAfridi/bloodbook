@@ -86,6 +86,7 @@ const Requests: React.FC<HomeNavigationProps<'Requests'>> = ({
           data={reqs}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <RequestItem req={item} />}
+          showsVerticalScrollIndicator={false}
         />
       </Box>
     </Container>

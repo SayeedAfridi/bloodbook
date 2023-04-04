@@ -44,4 +44,5 @@ export type HomeRoutes = {
   Profile: undefined
   Requests: undefined
   RequestsForMe: undefined
+  Donors: undefined
 }

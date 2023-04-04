@@ -1,32 +1,30 @@
 import React from 'react'
 import { HomeNavigationProps } from '@src/navigtation/types'
-import { Container, Header, RoundedIconButton } from '@src/components'
+import { Container, Header } from '@src/components'
 import { Box } from '@src/theme'
-import { BloodRequest } from '@src/types/request.types'
 import { useMount } from '@src/hooks'
 import { getErrorMessage, showErrorSnackbar } from '@src/utils'
 import { firestoreService } from '@src/services'
-import { requestCollection } from '@src/constants/collections'
+import { userCollection } from '@src/constants/collections'
 import { FlatList, RefreshControl } from 'react-native'
-import RequestItem from './RequestItem'
 import OverLayLoader from '@src/components/OverLayLoader'
+import DonorItem from './DonorItem'
+import { User } from '@src/types/auth.types'
 import { useSelector } from 'react-redux'
 import { selectUser } from '@src/redux/auth/auth.selectors'
 
-const RequestsForMe: React.FC<HomeNavigationProps<'RequestsForMe'>> = ({
-  navigation,
-}) => {
+const Donors: React.FC<HomeNavigationProps<'Donors'>> = ({ navigation }) => {
   const [loading, setLoading] = React.useState<boolean>(false)
-  const [reqs, setReqs] = React.useState<BloodRequest[]>([])
+  const [reqs, setReqs] = React.useState<User[]>([])
   const user = useSelector(selectUser)
 
   const loadReqs = async () => {
     try {
       setLoading(true)
-      const reqsCollectionRef =
-        firestoreService.getCollectionRef(requestCollection)
-      const reqsSnap = await reqsCollectionRef
-        .where('toUser.uid', '==', user?.uid)
+      const userCollectionRef =
+        firestoreService.getCollectionRef(userCollection)
+      const reqsSnap = await userCollectionRef
+        .where('uid', '!=', user?.uid)
         .get()
       const data = firestoreService.convertCollectionsSnapshotToMap(reqsSnap)
       setReqs(data)
@@ -46,19 +44,10 @@ const RequestsForMe: React.FC<HomeNavigationProps<'RequestsForMe'>> = ({
       <Container>
         <Header
           left={{ icon: 'menu', onPress: () => navigation.openDrawer() }}
-          title='Blood Requests For Me'
+          title='Donors'
         />
         <Box flex={1} backgroundColor='background'>
           <OverLayLoader />
-          <Box zIndex={999} position='absolute' bottom={20} right={20}>
-            <RoundedIconButton
-              size={48}
-              color='background'
-              backgroundColor='primary'
-              name='plus'
-              onPress={() => navigation.navigate('CreateRequest')}
-            />
-          </Box>
         </Box>
       </Container>
     )
@@ -68,17 +57,8 @@ const RequestsForMe: React.FC<HomeNavigationProps<'RequestsForMe'>> = ({
     <Container>
       <Header
         left={{ icon: 'menu', onPress: () => navigation.openDrawer() }}
-        title='Blood Requests For Me'
+        title='Donors'
       />
-      <Box zIndex={999} position='absolute' bottom={20} right={20}>
-        <RoundedIconButton
-          size={48}
-          color='background'
-          backgroundColor='primary'
-          name='plus'
-          onPress={() => navigation.navigate('CreateRequest')}
-        />
-      </Box>
       <Box
         flex={1}
         backgroundColor='background'
@@ -89,8 +69,8 @@ const RequestsForMe: React.FC<HomeNavigationProps<'RequestsForMe'>> = ({
             <RefreshControl refreshing={false} onRefresh={loadReqs} />
           }
           data={reqs}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <RequestItem req={item} />}
+          keyExtractor={(item) => item.uid}
+          renderItem={({ item }) => <DonorItem donor={item} />}
           showsVerticalScrollIndicator={false}
         />
       </Box>
@@ -98,4 +78,4 @@ const RequestsForMe: React.FC<HomeNavigationProps<'RequestsForMe'>> = ({
   )
 }
 
-export default RequestsForMe
+export default Donors

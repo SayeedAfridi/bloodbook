@@ -16,6 +16,7 @@ export interface ButtonProps {
   background?: keyof Theme['colors']
   textColor?: keyof Theme['colors']
   boldText?: boolean
+  hBlock?: boolean
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -30,6 +31,7 @@ const Button: React.FC<ButtonProps> = ({
   background,
   textColor,
   boldText = true,
+  hBlock,
 }: ButtonProps) => {
   const theme = useTheme()
   const styles = useStyles()
@@ -68,7 +70,11 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   return (
-    <Box marginHorizontal='s' borderRadius='s' overflow='hidden'>
+    <Box
+      marginHorizontal='s'
+      borderRadius='s'
+      overflow='hidden'
+      flex={hBlock ? 1 : undefined}>
       <TouchBox
         disabled={disabled}
         android_ripple={{ borderless: true }}
