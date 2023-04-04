@@ -1,16 +1,27 @@
-import { Spacer } from '@src/components'
-import { Card, Text, TouchBox } from '@src/theme'
+import { Button, Spacer } from '@src/components'
+import { Box, Card, Text, TouchBox } from '@src/theme'
 import { BloodRequest } from '@src/types/request.types'
-import { fp } from '@src/utils'
+import { fp, showErrorSnackbar } from '@src/utils'
 import React from 'react'
 import { Linking } from 'react-native'
 import Icon from 'react-native-vector-icons/Feather'
+import Share from 'react-native-share'
 
 export interface RequestItemProps {
   req: BloodRequest
 }
 
 const RequestItem: React.FC<RequestItemProps> = ({ req }) => {
+  const shareOnFB = React.useCallback(() => {
+    Share.shareSingle({
+      title: 'Urgent blood needed',
+      message: `${req.bloodGroup} blood needed at ${req.address}. For more information call ${req.phone}`,
+      social: Share.Social.FACEBOOK,
+    }).catch(() => {
+      showErrorSnackbar('Facebook is not installed')
+    })
+  }, [req.address, req.bloodGroup, req.phone])
+
   return (
     <Card variant='elevated'>
       <Text color='danger' fontSize={fp(3)} variant='logo'>
@@ -28,6 +39,14 @@ const RequestItem: React.FC<RequestItemProps> = ({ req }) => {
           <Icon name='phone' /> {req.phone}
         </Text>
       </TouchBox>
+      <Box marginTop='s'>
+        <Button
+          onPress={shareOnFB}
+          variant='secondary'
+          title='Share on Facebook'
+          icon='facebook'
+        />
+      </Box>
     </Card>
   )
 }
