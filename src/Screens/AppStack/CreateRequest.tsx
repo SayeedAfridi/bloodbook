@@ -27,10 +27,12 @@ const schema = yup.object().shape({
 
 const CreateRequest: React.FC<AppNavigationProps<'CreateRequest'>> = ({
   navigation,
+  route,
 }) => {
   const [bloodGroup, setBloodGroup] = React.useState<BloodGroup | ''>('')
   const [loading, setLoading] = React.useState<boolean>(false)
   const user = useSelector(selectUser)
+  const toUser = route?.params?.toUser ?? null
 
   const onSubmit = async (v: any) => {
     try {
@@ -42,6 +44,7 @@ const CreateRequest: React.FC<AppNavigationProps<'CreateRequest'>> = ({
         ...v,
         bloodGroup,
         user,
+        toUser,
       }
       const requestCollectionRef =
         firestoreService.getCollectionRef(requestCollection)
@@ -76,7 +79,7 @@ const CreateRequest: React.FC<AppNavigationProps<'CreateRequest'>> = ({
   return (
     <AuthLayout
       animation={require('@src/assets/animations/request.json')}
-      title='Requset Blood'
+      title={!toUser ? 'Requset Blood' : `Request Blood From ${toUser.name}`}
       busy={loading}
       mainButtonTitle='Send Request'
       mainButtonPressed={handleSubmit}

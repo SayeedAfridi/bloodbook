@@ -1,6 +1,7 @@
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/core'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
+import { User } from '@src/types/auth.types'
 
 export interface AppNavigationProps<RouteName extends keyof AppStackRoutes> {
   navigation: NativeStackNavigationProp<AppStackRoutes, RouteName>
@@ -11,7 +12,7 @@ export type AppStackRoutes = {
   Startup: undefined
   Authentication: undefined
   AppHome: undefined
-  CreateRequest: undefined
+  CreateRequest?: { toUser: User }
 }
 
 export type AppRoutes = AppStackRoutes & AuthRoutes & HomeRoutes
@@ -42,4 +43,5 @@ export type HomeRoutes = {
   Map: undefined
   Profile: undefined
   Requests: undefined
+  RequestsForMe: undefined
 }

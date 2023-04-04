@@ -10,19 +10,24 @@ import { requestCollection } from '@src/constants/collections'
 import { FlatList, RefreshControl } from 'react-native'
 import RequestItem from './RequestItem'
 import OverLayLoader from '@src/components/OverLayLoader'
+import { useSelector } from 'react-redux'
+import { selectUser } from '@src/redux/auth/auth.selectors'
 
-const Requests: React.FC<HomeNavigationProps<'Requests'>> = ({
+const RequestsForMe: React.FC<HomeNavigationProps<'RequestsForMe'>> = ({
   navigation,
 }) => {
   const [loading, setLoading] = React.useState<boolean>(false)
   const [reqs, setReqs] = React.useState<BloodRequest[]>([])
+  const user = useSelector(selectUser)
 
   const loadReqs = async () => {
     try {
       setLoading(true)
       const reqsCollectionRef =
         firestoreService.getCollectionRef(requestCollection)
-      const reqsSnap = await reqsCollectionRef.where('toUser', '==', null).get()
+      const reqsSnap = await reqsCollectionRef
+        .where('toUser.uid', '==', user?.uid)
+        .get()
       const data = firestoreService.convertCollectionsSnapshotToMap(reqsSnap)
       setReqs(data)
       setLoading(false)
@@ -41,7 +46,7 @@ const Requests: React.FC<HomeNavigationProps<'Requests'>> = ({
       <Container>
         <Header
           left={{ icon: 'menu', onPress: () => navigation.openDrawer() }}
-          title='Blood Requests'
+          title='Blood Requests For Me'
         />
         <Box flex={1} backgroundColor='background'>
           <OverLayLoader />
@@ -63,7 +68,7 @@ const Requests: React.FC<HomeNavigationProps<'Requests'>> = ({
     <Container>
       <Header
         left={{ icon: 'menu', onPress: () => navigation.openDrawer() }}
-        title='Blood Requests'
+        title='Blood Requests For Me'
       />
       <Box zIndex={999} position='absolute' bottom={20} right={20}>
         <RoundedIconButton
@@ -92,4 +97,4 @@ const Requests: React.FC<HomeNavigationProps<'Requests'>> = ({
   )
 }
 
-export default Requests
+export default RequestsForMe

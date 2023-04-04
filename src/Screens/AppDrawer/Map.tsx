@@ -115,6 +115,11 @@ const Map: React.FC<HomeNavigationProps<'Map'>> = ({ navigation }) => {
                 flat={true}
                 title={u.name}
                 description={`group: ${u.bloodGroup} ve`}
+                onCalloutPress={() =>
+                  navigation.navigate('CreateRequest', {
+                    toUser: u,
+                  })
+                }
               />
             )
           })}
